@@ -172,6 +172,7 @@
 		  });
 	  </script>
 	  <script src="{{ asset('adminBack/assets/js/index.js') }}"></script>
+      <script src="{{ asset('adminBack/assets/js/validate.min.js') }}"></script>
 
        <!--Datatable-->
 <script src="{{ asset('adminBack/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
@@ -207,6 +208,8 @@
  }
  @endif
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ <script src="{{ asset('adminbackend/assets/js/code.js') }}"></script>
 
 </body>
 
