@@ -23,6 +23,9 @@
 	<link rel="stylesheet" href="{{ asset('adminBack/assets/css/dark-theme.css') }}" />
 	<link rel="stylesheet" href="{{ asset('adminBack/assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('adminBack/assets/css/header-colors.css') }}" />
+    <!-- DataTable -->
+	<link href="{{ asset('adminBack/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <!-- DataTable-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 	<title>Rukada - Tableau de bord Admin</title>
 </head>
@@ -162,12 +165,22 @@
 	<script src="{{ asset('adminBack/assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
 	<script src="{{ asset('adminBack/assets/plugins/jquery-knob/excanvas.js') }}"></script>
 	<script src="{{ asset('adminBack/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+
 	  <script>
 		  $(function() {
 			  $(".knob").knob();
 		  });
 	  </script>
 	  <script src="{{ asset('adminBack/assets/js/index.js') }}"></script>
+
+       <!--Datatable-->
+<script src="{{ asset('adminBack/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		  } );
+	</script>
+<!--Datatable-->
 	<!--app JS-->
 	<script src="{{ asset('adminBack/assets/js/app.js') }}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
