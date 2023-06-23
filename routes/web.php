@@ -98,6 +98,7 @@ Route::controller(SubCategoryController::class)->group(function(){
     Route::get('/edit/subcategory/{id}', 'EditSubCategory')->name('edit.subcategory');
     Route::post('/update/subcategory' , 'UpdateSubCategory')->name('update.subcategory');
     Route::get('/delete/subcategory/{id}' , 'DeleteSubCategory')->name('delete.subcategory');
+    Route::get('/subcategory/ajax/{id}' , 'GetSubCategory');
 });
 
  // Vendor Active and Inactive All Route
@@ -115,7 +116,12 @@ Route::controller(SubCategoryController::class)->group(function(){
 // Product All Route
 Route::controller(ProductController::class)->group(function(){
     Route::get('/all/product' , 'AllProduct')->name('all.product');
-    Route::get('/add/subcategory' , 'AddSubCategory')->name('add.subcategory');
+    Route::get('/add/product' , 'AddProduct')->name('add.product');
+    Route::post('/store/product' , 'StoreProduct')->name('store.product');
+    Route::get('/edit/product/{id}' , 'EditProduct')->name('edit.product');
+    Route::post('/update/product' , 'UpdateProduct')->name('update.product');
+    Route::post('/update/product/thambnail' , 'UpdateProductThambnail')->name('update.product.thambnail');
+    Route::post('/update/product/multiimage' , 'UpdateProductMultiimage')->name('update.product.multiimage');
 
 
 });
