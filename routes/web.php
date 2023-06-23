@@ -123,6 +123,9 @@ Route::controller(ProductController::class)->group(function(){
     Route::post('/update/product/thambnail' , 'UpdateProductThambnail')->name('update.product.thambnail');
     Route::post('/update/product/multiimage' , 'UpdateProductMultiimage')->name('update.product.multiimage');
 
+    Route::get('/product/inactive/{id}' , 'ProductInactive')->name('product.inactive');
+    Route::get('/product/active/{id}' , 'ProductActive')->name('product.active');
+
 
 });
 
