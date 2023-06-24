@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -120,6 +121,17 @@ Route::controller(CategoryController::class)->group(function(){
     Route::get('/delete/category/{id}' , 'DeleteCategory')->name('delete.category');
 });
 
+// Slider All Route
+Route::controller(SliderController::class)->group(function(){
+    Route::get('/all/slider' , 'AllSlider')->name('all.slider');
+    Route::get('/add/category' , 'AddCategory')->name('add.category');
+    Route::post('/store/category' , 'StoreCategory')->name('store.category');
+    Route::get('/edit/category/{id}' , 'EditCategory')->name('edit.category');
+    Route::post('/update/category' , 'UpdateCategory')->name('update.category');
+    Route::get('/delete/category/{id}' , 'DeleteCategory')->name('delete.category');
+
+});
+
 Route::controller(SubCategoryController::class)->group(function(){
     Route::get('/all/subcategory', 'AllSubCategory')->name('all.subcategory');
     Route::get('/add/subcategory', 'AddSubCategory')->name('add.subcategory');
@@ -161,7 +173,7 @@ Route::controller(ProductController::class)->group(function(){
 });
 
 
-});
+});  // Admin End Middleware
 
 
 
