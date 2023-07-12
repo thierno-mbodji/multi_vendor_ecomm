@@ -110,7 +110,9 @@ class ProductController extends Controller
 
      public function UpdateProduct(Request $request){
 
+       // dd($request);
         $product_id = $request->id;
+        //dd($product_id);
 
         Product::findOrFail($product_id)->update([
 
@@ -143,11 +145,15 @@ class ProductController extends Controller
 
    ]);
 
+  // dd($product_id);
+
+
 
     $notification = array(
        'message' => 'Product Updated Without Image Successfully',
        'alert-type' => 'success'
    );
+   //dd($product_id);
 
    return redirect()->route('all.product')->with($notification);
 

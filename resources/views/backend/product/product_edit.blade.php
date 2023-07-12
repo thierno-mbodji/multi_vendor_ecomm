@@ -26,6 +26,7 @@
 
       <form id="myForm" method="post" action="{{ route('update.product') }}"  >
 			@csrf
+            <input type="hidden" name="id" value="{{ $products->id }}">
 
        <div class="form-body mt-4">
 	    <div class="row">
