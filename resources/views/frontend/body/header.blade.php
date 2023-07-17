@@ -272,7 +272,7 @@
 
                                 </li>
                                 @php
-    $categories = App\Models\Category::orderBy('category_name','ASC')->limit(5)->get();
+    $categories = App\Models\Category::orderBy('category_name','ASC')->limit(4)->get();
         @endphp
 
        @foreach($categories as $category)
