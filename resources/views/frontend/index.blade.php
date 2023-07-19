@@ -15,6 +15,8 @@
 
 @include('frontend.home.home_new_product')
 
+@include('frontend.home.home_features_product')
+
         <!-- Tshirt Category -->
 
     <section class="product-tabs section-padding position-relative">
