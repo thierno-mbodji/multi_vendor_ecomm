@@ -8,7 +8,7 @@
                             <h5 class="mb-15">{{ $breadsubcat->subcategory_name }}</h5>
                             <div class="breadcrumb">
                                 <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> {{ $breadsubcat->subcategory_name }}
+                                <span></span>{{ $breadsubcat->category->category_name }} <span></span>  {{ $breadsubcat->subcategory_name }}
                             </div>
                         </div>
 
@@ -83,10 +83,12 @@
                     <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
                 </div>
 
-    @php
-    $amount = $product->selling_price - $product->discount_price;
-    $discount = ($amount/$product->selling_price) * 100;
-    @endphp
+                @php
+                $p = (int)$product->selling_price;
+                $t = (int)$product->discount_price;
+                $amount = $p - $t;
+                $discount = ($amount/$p) * 100;
+                @endphp
 
 
                 <div class="product-badges product-badges-position product-badges-mrg">
@@ -125,18 +127,16 @@
                 <div class="product-card-bottom">
 
                     @if($product->discount_price == NULL)
-                     <div class="product-price">
-                        <span>${{ $product->selling_price }}</span>
+            <div class="product-price">
+               <span>{{ $product->selling_price }} FCFA</span>
 
-                    </div>
-
-                    @else
-                    <div class="product-price">
-                        <span>${{ $product->discount_price }}</span>
-                        <span class="old-price">${{ $product->selling_price }}</span>
-                    </div>
-                    @endif
-
+           </div>
+           @else
+           <div class="product-price">
+               <span>{{ $product->discount_price }} FCFA</span>
+               <span class="old-price">{{ $product->selling_price }} FCFA</span>
+           </div>
+           @endif
 
 
                     <div class="add-cart">
@@ -210,11 +210,11 @@ $products = App\Models\Product::where('category_id',$category->id)->get();
             <div class="content pt-10">
                 <p><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></p>
 
-                   @if($product->discount_price == NULL)
-                    <p class="price mb-0 mt-5">${{ $product->selling_price }}</p>
-                   @else
-                   <p class="price mb-0 mt-5">${{ $product->discount_price }}</p>
-                   @endif
+                @if($product->discount_price == NULL)
+                <p class="price mb-0 mt-5">{{ $product->selling_price }} FCFA</p>
+               @else
+               <p class="price mb-0 mt-5">{{ $product->discount_price }} FCFA</p>
+               @endif
 
                 <div class="product-rate">
                     <div class="product-rating" style="width: 90%"></div>
