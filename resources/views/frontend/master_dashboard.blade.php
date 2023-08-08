@@ -59,9 +59,13 @@
         </div>
     </div>
     <!-- Vendor JS-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+    {{-- <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
     <script src="{{ asset('frontend/assets/js/vendor/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/slick.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/jquery.syotimer.min.js') }}"></script>
@@ -81,12 +85,13 @@
     <!-- Template  JS -->
     <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
 
         $.ajaxSetup({
             headers:{
-                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('centent')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
             }
         })
         /// Start product view with Modal
@@ -106,6 +111,9 @@
             $('#pbrand').text(data.product.brand.brand_name);
             $('#pimage').attr('src','/'+data.product.product_thambnail );
 
+            $('#product_id').val(id);
+            $('#qty').val(1);
+
             // Product Price
             if (data.product.discount_price == null) {
                 $('#pprice').text('');
@@ -115,13 +123,133 @@
                 $('#pprice').text(data.product.discount_price);
                 $('#oldprice').text(data.product.selling_price);
             } // end else
+
+             /// Start Stock Option
+             if (data.product.product_qty > 0) {
+                $('#aviable').text('');
+                $('#stockout').text('');
+                $('#aviable').text('aviable');
+            }else{
+                $('#aviable').text('');
+                $('#stockout').text('');
+                $('#stockout').text('stockout');
+            }
+            ///End Start Stock Option
+             ///Size
+             $('select[name="size"]').empty();
+             $.each(data.size,function(key,value){
+                $('select[name="size"]').append('<option value="'+value+' ">'+value+'  </option')
+                if (data.size == "") {
+                    $('#sizeArea').hide();
+                }else{
+                     $('#sizeArea').show();
+                }
+             }) // end size
+                     ///Color
+               $('select[name="color"]').empty();
+             $.each(data.color,function(key,value){
+                $('select[name="color"]').append('<option value="'+value+' ">'+value+'  </option')
+                if (data.color == "") {
+                    $('#colorArea').hide();
+                }else{
+                     $('#colorArea').show();
+                }
+             }) // end size
             }
         })
 
 
 
     }
+
+
+    // End Product View With Modal
+    /// Start Add To Cart Prodcut
+    function addToCart(){
+        console.log('product_name')
+     var product_name = $('#pname').text();
+     var id = $('#product_id').val();
+     var color = $('#color option:selected').text();
+     var size = $('#size option:selected').text();
+     var quantity = $('#qty').val();
+     console.log(product_name)
+     $.ajax({
+        type: "POST",
+        dataType : 'JSON',
+        data:{
+            color:color, size:size, quantity:quantity,product_name:product_name
+        },
+        url: "/cart/data/store/"+id,
+        success:function(data){
+            console.log(data)
+            $('#closeModal').click();
+           // console.log(data)
+            // Start Message
+            const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 3000
+            })
+            if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                    type: 'success',
+                    title: data.success,
+                    })
+
+                }else{
+
+               Toast.fire({
+                        type: 'error',
+                        title: data.error,
+                        })
+                    }
+                    / End Message
+        }
+     })
+    }
+    /// End Add To Cart Prodcut
+
      </script>
+
+<script type="text/javascript">
+
+    function miniCart(){
+       $.ajax({
+           type: 'GET',
+           url: '/product/mini/cart',
+           dataType: 'json',
+           success:function(response){
+               // console.log(response)
+        var miniCart = ""
+        $.each(response.carts, function(key,value){
+           miniCart += ` <ul>
+            <li>
+                <div class="shopping-cart-img">
+                    <a href="shop-product-right.html"><img alt="Nest" src="/${value.options.image} " style="width:50px;height:50px;" /></a>
+                </div>
+                <div class="shopping-cart-title" style="margin: -73px 74px 14px; width" 146px;>
+                    <h4><a href="shop-product-right.html"> ${value.name} </a></h4>
+                    <h4><span>${value.qty} × </span>${value.price}</h4>
+                </div>
+                <div class="shopping-cart-delete" style="margin: -85px 1px 0px;">
+                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                </div>
+            </li>
+        </ul>
+        <hr><br>
+               `
+          });
+            $('#miniCart').html(miniCart);
+           }
+       })
+    }
+    miniCart();
+   </script>
+
+
 
 
 
