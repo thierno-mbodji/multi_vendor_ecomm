@@ -182,6 +182,7 @@
         url: "/cart/data/store/"+id,
         success:function(data){
             console.log(data)
+            miniCart();
             $('#closeModal').click();
            // console.log(data)
             // Start Message
@@ -223,6 +224,8 @@
            dataType: 'json',
            success:function(response){
                // console.log(response)
+               $('span[id="cartSubTotal"]').text(response.cartTotal);
+               $('#cartQty').text(response.cartQty);
         var miniCart = ""
         $.each(response.carts, function(key,value){
            miniCart += ` <ul>
@@ -235,7 +238,7 @@
                     <h4><span>${value.qty} × </span>${value.price}</h4>
                 </div>
                 <div class="shopping-cart-delete" style="margin: -85px 1px 0px;">
-                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                    <a type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"  ><i class="fi-rs-cross-small"></i></a>
                 </div>
             </li>
         </ul>
@@ -247,6 +250,41 @@
        })
     }
     miniCart();
+
+     /// Mini Cart Remove Start
+   function miniCartRemove(rowId){
+     $.ajax({
+        type: 'GET',
+        url: '/minicart/product/remove/'+rowId,
+        dataType:'json',
+        success:function(data){
+        miniCart();
+             // Start Message
+            const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 3000
+            })
+            if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                    type: 'success',
+                    title: data.success,
+                    })
+            }else{
+
+           Toast.fire({
+                    type: 'error',
+                    title: data.error,
+                    })
+                }
+              // End Message
+        }
+     })
+   }
+    /// Mini Cart Remove End
    </script>
 
 
